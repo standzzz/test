@@ -71,6 +71,7 @@ function checkforfinished(code)
 	return found
 end
 
+local function getpred()
 local ping = getUserPing()
 local pred = 0.115
 
@@ -79,13 +80,15 @@ if ping > 80 and ping < 120 then
 elseif ping > 120 and ping < 250 then
 	pred = 0.225
 elseif ping > 200 and ping < 320 then
-	pred = 2.5
+	pred = 0.5
 elseif ping > 320 then
-	pred = 3
+	pred = 1
 end
-
+	return pred
+end
 local shouldbeattacking = false
 local target = nil
+
 
 --[[task.spawn(function()
 	while true do 
@@ -354,11 +357,14 @@ function attack()
 				noclipactive()
 				shoot()
 				Reload()
+				if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true) then
+					game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true):Destroy()
+				end
 				local speaker = game.Players.LocalPlayer
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
 				end
-
+				getgenv().VoidxSilent.Prediction = getpred()
 				if not character:FindFirstChildWhichIsA("Tool") then setupgun() end
 				if not target.Character then return end
 				local s,t = GetClosestHitPoint(target.Character)
