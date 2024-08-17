@@ -85,6 +85,7 @@ function checkforfinished(code)
 		
 		if i == code then 
 			found = true
+			print("found code!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		end
 	end
 	return found
@@ -480,7 +481,9 @@ while a do
 		print("checking2")
 		local id = i
 		print(i)
-		if i ~= "placeholder" then 
+		if i ~= "placeholder" and not checkforfinished(v[2]) then 
+			warn("did i find the id? "..checkforfinished(v[2]))
+			print("ref = "..v[2])
 			local joinid = v[1]
 			local uniqueidentifier = v[2]
 			print(joinid)
@@ -489,7 +492,7 @@ while a do
 				print("found the pussio")
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
-					if tostring(payers.UserId) == id then
+					if tostring(payers.UserId) == id and not checkforfinished(v[2])then
 						currentreceiptinfo.indicator = uniqueidentifier
 						currentreceiptinfo.id = id
 						stompstodo = v[6]
