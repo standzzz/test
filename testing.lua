@@ -10,7 +10,7 @@ local currentreceiptinfo = {
 	roomid = nil,
 	stomps = nil
 }
--- v2
+-- v3
 local stompstodo = 0
 local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
@@ -482,7 +482,7 @@ while a do
 		local id = i
 		print(i)
 		if i ~= "placeholder" and not checkforfinished(v[2]) then 
-			warn("did i find the id? "..tostring(checkforfinished(v[2]))
+			warn("did i find the id? "..tostring(checkforfinished(v[2])))
 			print("ref = "..v[2])
 			local joinid = v[1]
 			local uniqueidentifier = v[2]
@@ -492,7 +492,7 @@ while a do
 				print("found the pussio")
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
-					if tostring(payers.UserId) == id and not checkforfinished(v[2])then
+					if tostring(payers.UserId) == id and not checkforfinished(v[2]) then
 						currentreceiptinfo.indicator = uniqueidentifier
 						currentreceiptinfo.id = id
 						stompstodo = v[6]
