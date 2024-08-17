@@ -86,6 +86,15 @@ local target = nil
 	end
 end)--]]
 
+function purchasearmor()
+	local armor = game.Workspace.Ignored.Shop:FindFirstChild("[Medium Armor] - $1066")
+	game.Players.LocalPlayer.Character.PrimaryPart.CFrame = armor:FindFirstChild("Head").CFrame
+	wait(0.5)
+	fireclickdetector(armor:FindFirstChild("ClickDetector"))
+	wait(0.5)
+	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+end
+
 function attack()
 	local activeconnections = {
 		A = nil,
@@ -275,6 +284,7 @@ function attack()
 			
 			-- Move the player's character to a new position after the loop ends
 			game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+			pcall(purchasearmor)
 		end
 	end)
 
@@ -308,7 +318,7 @@ function attack()
 				until bd:FindFirstChild("Dead").Value == true  or bd:FindFirstChild("K.O").Value == false or not target or notarget
 				
 				game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
-
+				pcall(purchasearmor)
 			end
 		end)
 
@@ -407,7 +417,13 @@ local a = true
 local TeleportService = game:GetService("TeleportService")
 while a do
 	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+	
 	if shouldbeattacking then return end
+	if game.Players.LocalPlayer.Character then 
+		pcall(function()
+			game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+		end)
+	end
 	print("Checking....")
 	local dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
 	local JobId = game.JobId
