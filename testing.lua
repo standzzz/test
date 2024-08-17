@@ -282,7 +282,7 @@ function attack()
 		wait(1)
 		repeat 
 			task.wait()
-		until not target.Character:FindFirstChildWhichIsA("ForceField")
+		until not target.Character:FindFirstChildWhichIsA("ForceField") or not target
 		attack = true
 		local bd = target.Character:FindFirstChild("BodyEffects")
 		local ko = bd:FindFirstChild("K.O") or bd:FindFirstChild("KO")
@@ -323,6 +323,7 @@ function attack()
 	end
 
 	local function checkdatabase()
+		if not target then return end
 		local dictionary
 		pcall(function()
 			dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
@@ -338,7 +339,15 @@ function attack()
 		end
 		return found
 	end
-
+	
+	
+	game.Players.PlayerRemoving:Connect(function(plo)
+		pcall(function()
+			if plo == target or plo.UserId == target.UserId then
+				disconnecting()
+			end
+		end)
+	end)
 
 	local increment = 0
 	connection = game:GetService("RunService").RenderStepped:Connect(function()
