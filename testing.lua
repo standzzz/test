@@ -466,6 +466,6 @@ while a do
 		end
 	end
 	
-	wait(5)
+	wait(30)
 end
 
