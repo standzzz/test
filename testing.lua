@@ -17,7 +17,7 @@ local function getUserPing()
 	return ping or 0 --// Divide by 1000 to get exact ping (i think, i dont remember if it returns in ms or numbers)
 end
 
-local function glitchcommunication(action2,message2)
+local function glitchcommunication(action2,message2,info)
 	local url = "https://polite-tropical-bonsai.glitch.me/submit"
 
 	local headers = {
@@ -25,11 +25,14 @@ local function glitchcommunication(action2,message2)
 	}
 
 	-- Modify the data table to include both "action" and "message"
+	
 	local data = {
 		action = action2,
 		message = message2
 	}
-
+	if action2 == "receipt" then
+		data = info
+	end
 	local jsonData = game:GetService("HttpService"):JSONEncode(data)
 
 	local response = request({
@@ -48,6 +51,9 @@ local function glitchcommunication(action2,message2)
 	end
 end
 
+function completereceipt(info)
+	glitchcommunication("receipt","blabla",info)
+end
 local HttpService = game:GetService("HttpService")
 local firebaseUrl = "https://snipehanl-default-rtdb.europe-west1.firebasedatabase.app/COMPLETED.json"
 
@@ -76,15 +82,15 @@ end
 local shouldbeattacking = false
 local target = nil
 
-task.spawn(function()
+--[[task.spawn(function()
 	while true do 
 		wait(30)
 		if shouldbeattacking then
-			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol to snipe you enemies!", 'All')
+			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("Add networkin to snipe your enimies!", 'All')
 
 		end
 	end
-end)
+end)--]]
 
 function purchasearmor()
 	local armor = game.Workspace.Ignored.Shop:FindFirstChild("[Medium Armor] - $1066")
@@ -330,17 +336,21 @@ function attack()
 		disconnectfactor = true
 		shouldbeattacking = false
 		target = nil
+		if player.Character then
+			player.Character.Humanoid:UnequipTools()
+		end
 	end
 
 	local function checkdatabase()
-		if not target then return end
+		if not target then return false end
 		local dictionary
 		pcall(function()
 			dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
 		end) 
 
 		local found = false
-		if dictionary then 
+		
+		if dictionary and target then 
 			for i,v in pairs(dictionary) do 
 				if i == tostring(target.UserId) then
 					found = true
@@ -458,7 +468,7 @@ while a do
 			if i ~= "placeholder" and not checkforfinished(v[2]) then
 				local isplaying = glitchcommunication("locate",i)
 				if isplaying and isplaying ~= "not playing" then
-					
+					completereceipt({caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
 					
 				end
