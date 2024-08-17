@@ -165,7 +165,25 @@ function attack()
 	-- Store the original prediction value
 	local originalPrediction = getgenv().VoidxSilent.Prediction
 	getgenv().VoidxSilent.Resolver = true
-
+	local mybd = character:FindFirstChild("BodyEffects") 
+	mybd:FindFirstChild("K.O"):GetPropertyChangedSignal("Value"):Connect(function()
+		pcall(function()
+		if mybd:FindFirstChild("K.O").Value == true then
+			game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+		end
+			end)
+	end)
+	
+	player.CharacterAdded:Connect(function()
+		local mybd = character:FindFirstChild("BodyEffects") 
+		mybd:FindFirstChild("K.O"):GetPropertyChangedSignal("Value"):Connect(function()
+			pcall(function()
+				if mybd:FindFirstChild("K.O").Value == true then
+					game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+				end
+			end)
+		end)
+	end)
 	-- Function to get the velocity of the target's part
 	local function GetVelocity(target, partName)
 		if target and target.Character then
@@ -201,7 +219,7 @@ function attack()
 			repeat 
 				-- Calculate the offset to position your character's feet on the target's torso
 				local offset = Vector3.new(0, character.PrimaryPart.Size.Y / 2, 0)
-		print("memoryleak test2")
+
 				-- Move your character to stand on the target's torso
 				if target and target.Character and character then 
 					character.PrimaryPart.CFrame = CFrame.new(target.Character.UpperTorso.Position + Vector3.new(0,2,0))
@@ -213,10 +231,11 @@ function attack()
 					
 				end
 				-- Fire the "Stomp" event
+				wait(0.1)
+
 				game.ReplicatedStorage.MainEvent:FireServer("Stomp")
 
 				-- Wait 0.5 seconds before the next iteration
-				wait(1)
 			
 			until bd:FindFirstChild("Dead").Value == true or bd:FindFirstChild("K.O").Value == false or not target
 			
@@ -239,8 +258,7 @@ function attack()
 				attack = not ko.Value
 				local notarget = false
 				repeat 
-					wait(1)
-	print("memoryleak test1")
+					
 					if target and target.Character and character then 
 						character.PrimaryPart.CFrame = CFrame.new(target.Character.UpperTorso.Position + Vector3.new(0,2,0))
 					else
@@ -248,10 +266,11 @@ function attack()
 							game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 					
 							notarget = true
-					
+						
 					end
-					
+					wait(0.1)
 					game.ReplicatedStorage.MainEvent:FireServer("Stomp")
+					
 				until bd:FindFirstChild("Dead").Value == true  or bd:FindFirstChild("K.O").Value == false or not target or notarget
 				
 				game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
