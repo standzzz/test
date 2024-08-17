@@ -458,7 +458,7 @@ while a do
 		end)
 	end
 	print("Checking....")
-	if currentreceiptinfo.indicaotr then
+	if currentreceiptinfo.indicator then
 		if stompstodo <  1 then stompstodo = 0 end
 		local newstomp = originalstomp - stompstodo
 		if newstomp < 1 then newstomp = 0 end
