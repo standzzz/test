@@ -11,7 +11,7 @@ game.Players.LocalPlayer.OnTeleport:Connect(function(State)
 end)
 
 local Stats = game:GetService("Stats")
-
+wait(5)
 local function getUserPing()
 	local ping = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
 	return ping or 0 --// Divide by 1000 to get exact ping (i think, i dont remember if it returns in ms or numbers)
@@ -71,24 +71,10 @@ function checkforfinished(code)
 	return found
 end
 
-local function getpred()
-local ping = getUserPing()
-local pred = 0.115
 
-if ping > 80 and ping < 120 then
-	pred = 0.15
-elseif ping > 120 and ping < 250 then
-	pred = 0.225
-elseif ping > 200 and ping < 320 then
-	pred = 0.5
-elseif ping > 320 then
-	pred = 1
-end
-	return pred
-end
+
 local shouldbeattacking = false
 local target = nil
-
 
 --[[task.spawn(function()
 	while true do 
@@ -107,6 +93,19 @@ function attack()
 		C = nil,
 		D = nil
 	}
+	local ping = getUserPing()
+	local pred = 0.115
+
+	if ping > 80 and ping < 120 then
+		pred = 0.15
+	elseif ping > 120 and ping < 250 then
+		pred = 0.225
+	elseif ping > 200 and ping < 320 then
+		pred = 2.5
+	elseif ping > 320 then
+		pred = 3
+	end
+
 
 	print("attacking.../")
 	local attack = true
@@ -221,8 +220,6 @@ function attack()
 	end)
 	-- Function to get the velocity of the target's part
 	local function GetVelocity(target, partName)
-		print(getpred())
-		getgenv().VoidxSilent.Prediction = getpred()
 		if target and target.Character then
 			local targetPart = target.Character:FindFirstChild(partName)
 			if targetPart then
@@ -359,14 +356,14 @@ function attack()
 				noclipactive()
 				shoot()
 				Reload()
-				if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true) then
-					game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true):Destroy()
-				end
 				local speaker = game.Players.LocalPlayer
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
 				end
-				
+				if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true) then
+					game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true):Destroy()
+				end
+
 				if not character:FindFirstChildWhichIsA("Tool") then setupgun() end
 				if not target.Character then return end
 				local s,t = GetClosestHitPoint(target.Character)
