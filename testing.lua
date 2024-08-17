@@ -471,7 +471,7 @@ while a do
 					
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
 				else
-					completereceipt({caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
+					completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
 				end
 			end
 		end
