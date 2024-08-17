@@ -30,7 +30,7 @@ local function getUserPing()
 end
 
 local function glitchcommunication(action2,message2,info)
-	local url = "https://polite-tropical-bonsai.glitch.me/submit"
+	local url = "https://intermediate-screeching-armadillo.glitch.me/submit"
 
 	local headers = {
 		["Content-Type"] = "application/json"
@@ -363,7 +363,7 @@ function attack()
 		if not target then return false end
 		local dictionary
 		pcall(function()
-			dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
+			dictionary = loadstring(game:HttpGet("https://intermediate-screeching-armadillo.glitch.me"))()
 		end) 
 
 		local found = false
@@ -473,7 +473,7 @@ while a do
 		originalstomp = 0
 		
 	end
-	local dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
+	local dictionary = loadstring(game:HttpGet("https://intermediate-screeching-armadillo.glitch.me"))()
 	local JobId = game.JobId
 	local found3 = false
 	for i,v in pairs(dictionary) do
