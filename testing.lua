@@ -1,6 +1,18 @@
 queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 print("working")
+local currentreceiptinfo = {
+	action = "receipt",
+	message = "blablabla",
+	caller = nil,
+	id = nil,
+	room = nil,
+	indicaotr = nil,
+	roomid = nil,
+	stomps = nil
+}
 
+local stompstodo = 0
+local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
 game.Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if State == Enum.TeleportState.Started then
@@ -25,7 +37,7 @@ local function glitchcommunication(action2,message2,info)
 	}
 
 	-- Modify the data table to include both "action" and "message"
-	
+
 	local data = {
 		action = action2,
 		message = message2
@@ -70,6 +82,7 @@ function checkforfinished(code)
 	print(data)
 	local found = false
 	for i,v in pairs(data) do  
+		
 		if i == code then 
 			found = true
 		end
@@ -82,15 +95,15 @@ end
 local shouldbeattacking = false
 local target = nil
 
---[[task.spawn(function()
+task.spawn(function()
 	while true do 
 		wait(30)
 		if shouldbeattacking then
-			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("Add networkin to snipe your enimies!", 'All')
+			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol", 'All')
 
 		end
 	end
-end)--]]
+end)
 
 function purchasearmor()
 	local armor = game.Workspace.Ignored.Shop:FindFirstChild("[Medium Armor] - $1066")
@@ -148,10 +161,12 @@ function attack()
 		local cd = lmgAMMO:FindFirstChild("ClickDetector")
 		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = lmgAMMO.Head.CFrame
 		for i = 1,15 do
-			wait(1)
+			game.Players.LocalPlayer.Character.PrimaryPart.CFrame = lmgAMMO.Head.CFrame
+			wait(0.1)
 			if cd then
 				fireclickdetector(cd)
 			end
+			game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 		end
 	end
 
@@ -178,7 +193,7 @@ function attack()
 
 			end)
 		else
-			grabguns()
+			pcall(grabguns())
 		end
 	end
 
@@ -217,12 +232,12 @@ function attack()
 	local mybd = character:FindFirstChild("BodyEffects") 
 	mybd:FindFirstChild("K.O"):GetPropertyChangedSignal("Value"):Connect(function()
 		pcall(function()
-		if mybd:FindFirstChild("K.O").Value == true then
-			game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
-		end
-			end)
+			if mybd:FindFirstChild("K.O").Value == true then
+				game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+			end
+		end)
 	end)
-	
+
 	player.CharacterAdded:Connect(function()
 		local mybd = character:FindFirstChild("BodyEffects") 
 		mybd:FindFirstChild("K.O"):GetPropertyChangedSignal("Value"):Connect(function()
@@ -254,7 +269,7 @@ function attack()
 	end
 
 
-	setupgun()
+	pcall(setupgun())
 	local SineX, SineZ = 0, math.pi / 2
 	local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 	local bd = target.Character:FindFirstChild("BodyEffects")
@@ -273,11 +288,11 @@ function attack()
 				if target and target.Character and character then 
 					character.PrimaryPart.CFrame = CFrame.new(target.Character.UpperTorso.Position + Vector3.new(0,2,0))
 				else
-					
-						game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
-					 notarget = true
-						
-					
+
+					game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+					notarget = true
+
+
 				end
 				-- Fire the "Stomp" event
 				wait(0.1)
@@ -285,10 +300,11 @@ function attack()
 				game.ReplicatedStorage.MainEvent:FireServer("Stomp")
 
 				-- Wait 0.5 seconds before the next iteration
-			
-			until bd:FindFirstChild("Dead").Value == true or bd:FindFirstChild("K.O").Value == false or not target
-			
+
+			until not target or bd:FindFirstChild("Dead").Value == true or bd:FindFirstChild("K.O").Value == false
+					
 			-- Move the player's character to a new position after the loop ends
+			stompstodo = stompstodo - 1
 			game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 			pcall(purchasearmor)
 		end
@@ -298,32 +314,34 @@ function attack()
 		wait(1)
 		repeat 
 			task.wait()
-		until not target.Character:FindFirstChildWhichIsA("ForceField") or not target
+		until not target or not target.Character:FindFirstChildWhichIsA("ForceField") 
 		attack = true
 		local bd = target.Character:FindFirstChild("BodyEffects")
 		local ko = bd:FindFirstChild("K.O") or bd:FindFirstChild("KO")
 		activeconnections.C = ko:GetPropertyChangedSignal("Value"):Connect(function()
 			if ko.Value then
+				
 				character.Humanoid:UnequipTools()
 				attack = not ko.Value
 				local notarget = false
 				repeat 
-					
+
 					if target and target.Character and character then 
 						character.PrimaryPart.CFrame = CFrame.new(target.Character.UpperTorso.Position + Vector3.new(0,2,0))
 					else
-						
-							game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
-					
-							notarget = true
-						
+
+						game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+
+						notarget = true
+
 					end
 					wait(0.1)
 					game.ReplicatedStorage.MainEvent:FireServer("Stomp")
-					
-				until bd:FindFirstChild("Dead").Value == true  or bd:FindFirstChild("K.O").Value == false or not target or notarget
-				
+
+				until  not target or notarget or bd:FindFirstChild("Dead").Value == true  or bd:FindFirstChild("K.O").Value == false 
+
 				game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+				stompstodo = stompstodo - 1
 				pcall(purchasearmor)
 			end
 		end)
@@ -349,7 +367,7 @@ function attack()
 		end) 
 
 		local found = false
-		
+
 		if dictionary and target then 
 			for i,v in pairs(dictionary) do 
 				if i == tostring(target.UserId) then
@@ -357,10 +375,14 @@ function attack()
 				end
 			end
 		end
+		if not found then
+			found = checkforfinished(currentreceiptinfo.indicaotr)
+		end
+		
 		return found
 	end
-	
-	
+
+
 	game.Players.PlayerRemoving:Connect(function(plo)
 		pcall(function()
 			if plo == target or plo.UserId == target.UserId then
@@ -374,7 +396,7 @@ function attack()
 		if shouldbeattacking and target then 
 			increment = increment + 1
 			if increment > 300 then
-				if not checkdatabase() then
+				if not checkdatabase() or stompstodo < 1 then
 					disconnecting()
 				end
 				increment = 0
@@ -382,9 +404,9 @@ function attack()
 
 			if attack and target and target.Character then
 				local Part = target.Character.PrimaryPart
-				noclipactive()
-				shoot()
-				Reload()
+				pcall(noclipactive())
+				pcall(shoot())
+				pcall(Reload())
 				local speaker = game.Players.LocalPlayer
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
@@ -393,11 +415,11 @@ function attack()
 					game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true):Destroy()
 				end
 
-				if not character:FindFirstChildWhichIsA("Tool") then setupgun() end
-				if not target.Character then return end
-				local s,t = GetClosestHitPoint(target.Character)
+				if not character:FindFirstChildWhichIsA("Tool") then pcall(setupgun()) end
+				if target and not target.Character then return end
+				local s,t = pcall(GetClosestHitPoint(target.Character))
 				if not s then return end
-				local v = GetVelocity(target, s.Name)
+				local v = pcall(GetVelocity(target, s.Name))
 				game.ReplicatedStorage.MainEvent:FireServer("UpdateMousePosI",t+v*getgenv().VoidxSilent.Prediction)
 
 				SineX, SineZ = SineX + 1, SineZ + 1
@@ -427,14 +449,30 @@ local a = true
 local TeleportService = game:GetService("TeleportService")
 while a do
 	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
-	
+
 	if shouldbeattacking then return end
+	
 	if game.Players.LocalPlayer.Character then 
 		pcall(function()
 			game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
 		end)
 	end
 	print("Checking....")
+	if currentreceiptinfo.indicaotr then
+		if stompstodo <  1 then stompstodo = 0 end
+		local newstomp = originalstomp - stompstodo
+		if newstomp < 1 then newstomp = 0 end
+		currentreceiptinfo.stomps = newstomp
+		completereceipt(currentreceiptinfo)
+		for b,n in pairs(currentreceiptinfo) do
+			if n ~= "blablabla" or n ~= "receipt" then
+				n = nil
+			end
+		end
+		stompstodo = 0
+		originalstomp = 0
+		
+	end
 	local dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
 	local JobId = game.JobId
 	local found3 = false
@@ -451,6 +489,13 @@ while a do
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
 					if tostring(payers.UserId) == id then
+						currentreceiptinfo.indicaotr = v[2]
+						currentreceiptinfo.id = id
+						stompstodo = v[6]
+						originalstomp = v[6]
+						currentreceiptinfo.room = v[4]
+						currentreceiptinfo.roomid = v[5]
+						currentreceiptinfo.caller = v[3]
 						found3 = true
 						target = payers
 						shouldbeattacking = true
@@ -463,12 +508,12 @@ while a do
 	end
 	wait(1)
 	if not found3 then 
-		
+
 		for i,v in pairs(dictionary) do
 			if i ~= "placeholder" and not checkforfinished(v[2]) then
 				local isplaying = glitchcommunication("locate",i)
 				if isplaying and isplaying ~= "not playing" then
-					
+
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
 				else
 					completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
@@ -476,7 +521,6 @@ while a do
 			end
 		end
 	end
-	
+
 	wait(30)
 end
-
