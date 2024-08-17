@@ -1,7 +1,14 @@
---queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
 print("working")
 
 if not game:IsLoaded() then game.Loaded:Wait() end
+game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+	if State == Enum.TeleportState.Started then
+		if  queueteleport then
+			queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/standzzz/test/main/testing.lua'))()")
+		end
+	end
+end)
 
 local Stats = game:GetService("Stats")
 
@@ -10,7 +17,7 @@ local function getUserPing()
 	return ping or 0 --// Divide by 1000 to get exact ping (i think, i dont remember if it returns in ms or numbers)
 end
 
-local function glitchcommunication()
+local function glitchcommunication(action2,message2)
 	local url = "https://polite-tropical-bonsai.glitch.me/submit"
 
 	local headers = {
@@ -19,8 +26,8 @@ local function glitchcommunication()
 
 	-- Modify the data table to include both "action" and "message"
 	local data = {
-		action = "hi",
-		message = "2"
+		action = action2,
+		message = message2
 	}
 
 	local jsonData = game:GetService("HttpService"):JSONEncode(data)
@@ -34,9 +41,34 @@ local function glitchcommunication()
 
 	if response.StatusCode == 200 then
 		print("Data posted successfully:", response.Body)
+		return response.Body
 	else
 		warn("Failed to post data:", response.StatusMessage)
+		return false
 	end
+end
+
+local HttpService = game:GetService("HttpService")
+local firebaseUrl = "https://snipehanl-default-rtdb.europe-west1.firebasedatabase.app/COMPLETED.json"
+
+function checkforfinished(code)
+	local data
+	local success,error = pcall(function()
+		data = game:HttpGet(firebaseUrl)
+
+	end)
+
+	if error then print(error) end
+	if success then print("got data") end
+	data = game:GetService("HttpService"):JSONDecode(data)
+	print(data)
+	local found = false
+	for i,v in pairs(data) do  
+		if i == code then 
+			found = true
+		end
+	end
+	return found
 end
 
 local ping = getUserPing()
@@ -328,7 +360,9 @@ function attack()
 				end
 
 				if not character:FindFirstChildWhichIsA("Tool") then setupgun() end
+				if not target.Character then return end
 				local s,t = GetClosestHitPoint(target.Character)
+				if not s then return end
 				local v = GetVelocity(target, s.Name)
 				game.ReplicatedStorage.MainEvent:FireServer("UpdateMousePosI",t+v*getgenv().VoidxSilent.Prediction)
 
@@ -356,12 +390,14 @@ function attack()
 end
 
 local a = true
+local TeleportService = game:GetService("TeleportService")
 while a do
 	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 	if shouldbeattacking then return end
 	print("Checking....")
 	local dictionary = loadstring(game:HttpGet("https://polite-tropical-bonsai.glitch.me/"))()
 	local JobId = game.JobId
+	local found3 = false
 	for i,v in pairs(dictionary) do
 		print("checking2")
 		local id = i
@@ -375,6 +411,7 @@ while a do
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
 					if tostring(payers.UserId) == id then
+						found3 = true
 						target = payers
 						shouldbeattacking = true
 						local finished = attack()
@@ -384,5 +421,21 @@ while a do
 			end
 		end
 	end
+	wait(1)
+	if not found3 then 
+		
+		for i,v in pairs(dictionary) do
+			if i ~= "placeholder" and not checkforfinished(v[2]) then
+				local isplaying = glitchcommunication("locate",i)
+				if isplaying and isplaying ~= "not playing" then
+					
+					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
+					
+				end
+			end
+		end
+	end
+	
 	wait(5)
 end
+
