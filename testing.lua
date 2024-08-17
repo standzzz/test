@@ -485,7 +485,7 @@ while a do
 			local uniqueidentifier = v[2]
 			print(joinid)
 			print(id)
-			if JobId == joinid then 
+			if JobId == joinid and not checkforfinished(v[2])then 
 				print("found the pussio")
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
