@@ -10,7 +10,7 @@ local currentreceiptinfo = {
 	roomid = nil,
 	stomps = nil
 }
-
+-- v2
 local stompstodo = 0
 local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
@@ -415,7 +415,7 @@ function attack()
 					game.Players.LocalPlayer.PlayerGui:FindFirstChild("Framework",true):Destroy()
 				end
 
-				if not character:FindFirstChildWhichIsA("Tool") then pcall(setupgun()) end
+				if not character:FindFirstChildWhichIsA("Tool") then pcall(setupgun) end
 				if target and not target.Character then return end
 				local s,t = GetClosestHitPoint(target.Character)
 				if not s then return end
