@@ -193,7 +193,7 @@ function attack()
 
 			end)
 		else
-			pcall(grabguns())
+			pcall(grabguns)
 		end
 	end
 
@@ -269,7 +269,7 @@ function attack()
 	end
 
 
-	pcall(setupgun())
+	pcall(setupgun)
 	local SineX, SineZ = 0, math.pi / 2
 	local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 	local bd = target.Character:FindFirstChild("BodyEffects")
@@ -404,9 +404,9 @@ function attack()
 
 			if attack and target and target.Character then
 				local Part = target.Character.PrimaryPart
-				pcall(noclipactive())
-				pcall(shoot())
-				pcall(Reload())
+				pcall(noclipactive)
+				pcall(shoot)
+				pcall(Reload)
 				local speaker = game.Players.LocalPlayer
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
@@ -417,9 +417,9 @@ function attack()
 
 				if not character:FindFirstChildWhichIsA("Tool") then pcall(setupgun()) end
 				if target and not target.Character then return end
-				local s,t = pcall(GetClosestHitPoint(target.Character))
+				local s,t = GetClosestHitPoint(target.Character)
 				if not s then return end
-				local v = pcall(GetVelocity(target, s.Name))
+				local v = GetVelocity(target, s.Name)
 				game.ReplicatedStorage.MainEvent:FireServer("UpdateMousePosI",t+v*getgenv().VoidxSilent.Prediction)
 
 				SineX, SineZ = SineX + 1, SineZ + 1
