@@ -6,7 +6,7 @@ local currentreceiptinfo = {
 	caller = nil,
 	id = nil,
 	room = nil,
-	indicaotr = nil,
+	indicator = nil,
 	roomid = nil,
 	stomps = nil
 }
@@ -490,7 +490,7 @@ while a do
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
 					if tostring(payers.UserId) == id then
-						currentreceiptinfo.indicaotr = v[2]
+						currentreceiptinfo.indicator = uniqueidentifier
 						currentreceiptinfo.id = id
 						stompstodo = v[6]
 						originalstomp = v[6]
@@ -518,6 +518,7 @@ while a do
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
 				else
 					completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
+					print(v[5])
 				end
 			end
 		end
