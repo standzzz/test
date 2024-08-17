@@ -479,6 +479,7 @@ while a do
 	for i,v in pairs(dictionary) do
 		print("checking2")
 		local id = i
+		print(i)
 		if i ~= "placeholder" then 
 			local joinid = v[1]
 			local uniqueidentifier = v[2]
