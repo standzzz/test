@@ -221,6 +221,8 @@ function attack()
 	end)
 	-- Function to get the velocity of the target's part
 	local function GetVelocity(target, partName)
+		print(getpred())
+		getgenv().VoidxSilent.Prediction = getpred()
 		if target and target.Character then
 			local targetPart = target.Character:FindFirstChild(partName)
 			if targetPart then
@@ -364,7 +366,7 @@ function attack()
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
 				end
-				getgenv().VoidxSilent.Prediction = getpred()
+				
 				if not character:FindFirstChildWhichIsA("Tool") then setupgun() end
 				if not target.Character then return end
 				local s,t = GetClosestHitPoint(target.Character)
