@@ -76,15 +76,15 @@ end
 local shouldbeattacking = false
 local target = nil
 
---[[task.spawn(function()
+task.spawn(function()
 	while true do 
 		wait(30)
 		if shouldbeattacking then
-			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("Add networkin to snipe your enimies!", 'All')
+			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol to snipe you enemies!", 'All')
 
 		end
 	end
-end)--]]
+end)
 
 function purchasearmor()
 	local armor = game.Workspace.Ignored.Shop:FindFirstChild("[Medium Armor] - $1066")
