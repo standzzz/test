@@ -468,9 +468,10 @@ while a do
 			if i ~= "placeholder" and not checkforfinished(v[2]) then
 				local isplaying = glitchcommunication("locate",i)
 				if isplaying and isplaying ~= "not playing" then
-					completereceipt({caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
-					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
 					
+					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
+				else
+					completereceipt({caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
 				end
 			end
 		end
