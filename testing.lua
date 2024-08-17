@@ -482,7 +482,7 @@ while a do
 		local id = i
 		print(i)
 		if i ~= "placeholder" and not checkforfinished(v[2]) then 
-			warn("did i find the id? "..checkforfinished(v[2]))
+			warn("did i find the id? "..tostring(checkforfinished(v[2]))
 			print("ref = "..v[2])
 			local joinid = v[1]
 			local uniqueidentifier = v[2]
