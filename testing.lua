@@ -82,7 +82,7 @@ function checkforfinished(code)
 	print(data)
 	local found = false
 	for i,v in pairs(data) do  
-		
+
 		if i == code then 
 			found = true
 			print("found code!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -303,7 +303,7 @@ function attack()
 				-- Wait 0.5 seconds before the next iteration
 
 			until not target or bd:FindFirstChild("Dead").Value == true or bd:FindFirstChild("K.O").Value == false
-					
+
 			-- Move the player's character to a new position after the loop ends
 			stompstodo = stompstodo - 1
 			game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
@@ -321,7 +321,7 @@ function attack()
 		local ko = bd:FindFirstChild("K.O") or bd:FindFirstChild("KO")
 		activeconnections.C = ko:GetPropertyChangedSignal("Value"):Connect(function()
 			if ko.Value then
-				
+
 				character.Humanoid:UnequipTools()
 				attack = not ko.Value
 				local notarget = false
@@ -379,7 +379,7 @@ function attack()
 		if not found then
 			found = checkforfinished(currentreceiptinfo.indicaotr)
 		end
-		
+
 		return found
 	end
 
@@ -452,7 +452,7 @@ while a do
 	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 
 	if shouldbeattacking then return end
-	
+
 	if game.Players.LocalPlayer.Character then 
 		pcall(function()
 			game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
@@ -470,9 +470,18 @@ while a do
 				n = nil
 			end
 		end
+		currentreceiptinfo.indicator = nil
+		currentreceiptinfo.id = nil
+		stompstodo = nil
+		originalstomp = nil
+		currentreceiptinfo.room = nil
+		currentreceiptinfo.roomid = nil
+		currentreceiptinfo.caller = nil
 		stompstodo = 0
 		originalstomp = 0
-		
+		print("reverting all receipt infos....")
+	else
+		print("no receipt to send prtty sure.")
 	end
 	local dictionary = loadstring(game:HttpGet("https://giddy-rogue-macaroni.glitch.me"))()
 	local JobId = game.JobId
@@ -493,6 +502,7 @@ while a do
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
 					if tostring(payers.UserId) == id and not checkforfinished(v[2]) then
+						print("updating receipt")
 						currentreceiptinfo.indicator = uniqueidentifier
 						currentreceiptinfo.id = id
 						stompstodo = v[6]
