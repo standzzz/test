@@ -395,8 +395,9 @@ function attack()
 				end
 			end
 		end
+		
 		if not found then
-			found = checkforfinished(currentreceiptinfo.indicaotr)
+			found = checkforfinished(currentreceiptinfo.indicator)
 		end
 
 		return found
