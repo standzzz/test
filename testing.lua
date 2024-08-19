@@ -483,14 +483,18 @@ while a do
 	else
 		print("no receipt to send prtty sure.")
 	end
-	local dictionary = loadstring(game:HttpGet("https://giddy-rogue-macaroni.glitch.me"))()
+	local dictionary
+	pcall(function()
+	 dictionary = loadstring(game:HttpGet("https://giddy-rogue-macaroni.glitch.me"))()
+	end)
+	if not dictionary then return end
 	local JobId = game.JobId
 	local found3 = false
 	for i,v in pairs(dictionary) do
 		print("checking2")
 		local id = i
 		print(i)
-		if i ~= "placeholder" and not checkforfinished(v[2]) then 
+		if i ~= "placeholder" and not checkforfinished(v[2]) and tostring(v[7]) == tostring(game.Players.LocalPlayer.UserId) then 
 			warn("did i find the id? "..tostring(checkforfinished(v[2])))
 			print("ref = "..v[2])
 			local joinid = v[1]
@@ -524,7 +528,7 @@ while a do
 	if not found3 then 
 
 		for i,v in pairs(dictionary) do
-			if i ~= "placeholder" and not checkforfinished(v[2]) then
+			if i ~= "placeholder" and not checkforfinished(v[2]) and tostring(v[7]) == tostring(game.Players.LocalPlayer.UserId) then
 				local isplaying = glitchcommunication("locate",i)
 				if isplaying and isplaying ~= "not playing" then
 
