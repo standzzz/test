@@ -399,7 +399,7 @@ function attack()
 		if not found then
 			found = checkforfinished(currentreceiptinfo.indicator)
 			print(found)
-			warn("receipt infooooooooo "..tostring(checkforfinished(currentreceiptinfo.indicator))
+			warn("receipt infooooooooo "..tostring(checkforfinished(currentreceiptinfo.indicator)))
 		end
 
 		return found
