@@ -380,7 +380,9 @@ function attack()
 	end
 
 	local function checkdatabase()
+		print("checking database if not second message then returning false.")
 		if not target then return false end
+		print("second  ")
 		local dictionary
 		pcall(function()
 			dictionary = loadstring(game:HttpGet("https://giddy-rogue-macaroni.glitch.me"))()
@@ -503,6 +505,7 @@ while a do
 		stompstodo = 0
 		originalstomp = 0
 		print("reverting all receipt infos....")
+		
 	else
 		print("no receipt to send prtty sure.")
 	end
@@ -556,6 +559,7 @@ while a do
 				if isplaying and isplaying ~= "not playing" then
 
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
+					break
 				else
 					completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
 					print(v[5])
