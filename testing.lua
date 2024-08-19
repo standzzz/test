@@ -380,14 +380,15 @@ function attack()
 	end
 
 	local function checkdatabase()
-		print("checking database if not second message then returning false.")
+		
 		if not target then return false end
-		print("second  ")
+		
 		local dictionary
 		pcall(function()
+			
 			dictionary = loadstring(game:HttpGet("https://giddy-rogue-macaroni.glitch.me"))()
 		end) 
-
+		
 		local found = false
 
 		if dictionary and target then 
@@ -398,8 +399,8 @@ function attack()
 			end
 		end
 		
-		if not found then
-			found = checkforfinished(currentreceiptinfo.indicator)
+		if found then
+			found = not checkforfinished(currentreceiptinfo.indicator)
 			print(found)
 			warn("receipt infooooooooo "..tostring(checkforfinished(currentreceiptinfo.indicator)))
 		end
@@ -557,9 +558,8 @@ while a do
 			if i ~= "placeholder" and not checkforfinished(v[2]) and tostring(v[7]) == tostring(game.Players.LocalPlayer.UserId) then
 				local isplaying = glitchcommunication("locate",i)
 				if isplaying and isplaying ~= "not playing" then
-
+					print("Joining")
 					TeleportService:TeleportToPlaceInstance(game.PlaceId, isplaying, game:GetService("Players").LocalPlayer)
-					break
 				else
 					completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
 					print(v[5])
