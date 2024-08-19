@@ -115,6 +115,22 @@ function purchasearmor()
 	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
 end
 
+function checkforammo()
+	if game.Players.LocalPlayer.DataFolder.Inventory["[LMG]"].Value < 2 then
+		local lmgAMMO = game.Workspace.Ignored.Shop:FindFirstChild("200 [LMG Ammo] - $318")
+local cd = lmgAMMO:FindFirstChild("ClickDetector")
+game.Players.LocalPlayer.Character.PrimaryPart.CFrame = lmgAMMO.Head.CFrame
+for i = 1,15 do
+	game.Players.LocalPlayer.Character.PrimaryPart.CFrame = lmgAMMO.Head.CFrame
+	wait(0.1)
+	if cd then
+		fireclickdetector(cd)
+	end
+	game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(-217,27,181)) * CFrame.Angles(0, 0, 0))
+end
+	end
+end
+
 function attack()
 	local activeconnections = {
 		A = nil,
@@ -155,7 +171,9 @@ function attack()
 
 		game.Players.LocalPlayer.Character.PrimaryPart.CFrame = lmg.Head.CFrame
 		wait(1)
+		repeat wait(0.1)
 		fireclickdetector(lmg.ClickDetector)
+		until game.Players.LocalPlayer.Backpack:FindFirstChild("[LMG]") or  game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("[LMG]")
 		wait(1)
 		repeat task.wait()
 		until lmgAMMO:FindFirstChild("ClickDetector")
