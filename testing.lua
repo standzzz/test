@@ -273,8 +273,9 @@ function attack()
 	pcall(setupgun)
 	local SineX, SineZ = 0, math.pi / 2
 	local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-	local bd = target.Character:FindFirstChild("BodyEffects")
-	local ko = bd:FindFirstChild("K.O") or bd:FindFirstChild("KO")
+	local bd = target and target.Character and target.Character:FindFirstChild("BodyEffects") and (target.Character:FindFirstChild("BodyEffects") or target.Character:FindFirstChild("BodyEffects"))
+
+	local ko = target and target.Character and target.Character:FindFirstChild("BodyEffects") and (target.Character:FindFirstChild("BodyEffects"):FindFirstChild("K.O") or target.Character:FindFirstChild("BodyEffects"):FindFirstChild("KO"))
 
 	activeconnections.A = ko:GetPropertyChangedSignal("Value"):Connect(function()
 		if ko.Value then
@@ -317,8 +318,11 @@ function attack()
 			task.wait()
 		until not target or not target.Character:FindFirstChildWhichIsA("ForceField") 
 		attack = true
-		local bd = target.Character:FindFirstChild("BodyEffects")
-		local ko = bd:FindFirstChild("K.O") or bd:FindFirstChild("KO")
+		if not target or not target.Character then return end
+		local bd = target and target.Character and target.Character:FindFirstChild("BodyEffects") and (target.Character:FindFirstChild("BodyEffects") or target.Character:FindFirstChild("BodyEffects"))
+
+		local ko = target and target.Character and target.Character:FindFirstChild("BodyEffects") and (target.Character:FindFirstChild("BodyEffects"):FindFirstChild("K.O") or target.Character:FindFirstChild("BodyEffects"):FindFirstChild("KO"))
+
 		activeconnections.C = ko:GetPropertyChangedSignal("Value"):Connect(function()
 			if ko.Value then
 
