@@ -96,15 +96,6 @@ end
 local shouldbeattacking = false
 local target = nil
 
-task.spawn(function()
-	while true do 
-		wait(30)
-		if shouldbeattacking then
-			game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol", 'All')
-
-		end
-	end
-end)
 
 function purchasearmor()
 	local armor = game.Workspace.Ignored.Shop:FindFirstChild("[Medium Armor] - $1066")
@@ -298,6 +289,9 @@ function attack()
 	activeconnections.A = ko:GetPropertyChangedSignal("Value"):Connect(function()
 		if ko.Value then
 			character.Humanoid:UnequipTools()
+			pcall(function()
+				game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol", 'All')
+			end)
 			attack = not ko.Value
 			local notarget = false
 			repeat 
@@ -345,6 +339,9 @@ function attack()
 			if ko.Value then
 
 				character.Humanoid:UnequipTools()
+				pcall(function()
+				game:GetService('ReplicatedStorage'):WaitForChild('DefaultChatSystemChatEvents'):WaitForChild('SayMessageRequest'):FireServer("buyastomp.lol", 'All')
+				end)
 				attack = not ko.Value
 				local notarget = false
 				repeat 
@@ -564,5 +561,5 @@ while a do
 		end
 	end
 
-	wait(30)
+	wait(15)
 end
