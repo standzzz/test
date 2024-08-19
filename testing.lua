@@ -398,6 +398,8 @@ function attack()
 		
 		if not found then
 			found = checkforfinished(currentreceiptinfo.indicator)
+			print(found)
+			warn("receipt infooooooooo "..checkforfinished(currentreceiptinfo.indicator))
 		end
 
 		return found
