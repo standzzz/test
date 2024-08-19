@@ -430,6 +430,7 @@ function attack()
 				pcall(noclipactive)
 				pcall(shoot)
 				pcall(Reload)
+				pcall(checkforammo)
 				local speaker = game.Players.LocalPlayer
 				if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 					speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
