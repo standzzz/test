@@ -11,7 +11,7 @@ local currentreceiptinfo = {
 	stomps = nil
 }
 -- v3
-loadstring(game:HttpGet("https://raw.githubusercontent.com/standzzz/test/main/customiy.lua"))()
+
 local stompstodo = 0
 local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
