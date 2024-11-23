@@ -125,7 +125,7 @@ function attack()
 		D = nil
 	}
 	local ping = getUserPing()
-	local pred = 0.115
+	local pred = 0
 
 	if ping > 80 and ping < 120 then
 		pred = 0.15
@@ -136,7 +136,7 @@ function attack()
 	elseif ping > 320 then
 		pred = 3
 	end
-
+	pred = 0
 
 	print("attacking.../")
 	local attack = true
@@ -218,7 +218,7 @@ function attack()
 	local Character = character
 	-- Initialize the global prediction value
 	getgenv().VoidxSilent = getgenv().VoidxSilent or {}
-	getgenv().VoidxSilent.Prediction = pred  -- Set the original prediction value
+	getgenv().VoidxSilent.Prediction = 0  -- Set the original prediction value
 
 	-- Function to get the closest hit point, always returning the HumanoidRootPart
 	local function GetClosestHitPoint(targetModel)
