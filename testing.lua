@@ -442,7 +442,7 @@ function attack()
 				local s,t = GetClosestHitPoint(target.Character)
 				if not s then return end
 				local v = GetVelocity(target, s.Name)
-				game.ReplicatedStorage.MainEvent:FireServer("UpdateMousePosI",t+v*getgenv().VoidxSilent.Prediction)
+				game.ReplicatedStorage.MainEvent:FireServer("UpdateMousePosI2",t+v*getgenv().VoidxSilent.Prediction)
 
 				SineX, SineZ = SineX + 1, SineZ + 1
 				local SinX, SinZ = math.sin(SineX), math.sin(SineZ)
