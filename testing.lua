@@ -11,7 +11,6 @@ local currentreceiptinfo = {
 	stomps = nil
 }
 -- v3
-loadstring(game:HttpGet("https://raw.githubusercontent.com/standzzz/test/main/customiy.lua"))()
 local stompstodo = 0
 local originalstomp = 0
 if not game:IsLoaded() then game.Loaded:Wait() end
@@ -523,7 +522,17 @@ while a do
 			local uniqueidentifier = v[2]
 			print(joinid)
 			print(id)
-			if JobId == joinid and not checkforfinished(v[2])then 
+            local niker = false
+            for i,n in pairs(game.Players:GetChildren()) do 
+                if n.UserId == id then niker = true end
+                
+            end
+            if niker == false then 
+                completereceipt({action = "receipt", message = "blablabla",caller = v[3], room = v[4],stomps = 0,id = i,indicator = v[2],roomid = v[5]})
+            return
+        end
+			if  not checkforfinished(v[2])then 
+
 				print("found the pussio")
 				local plr 
 				for _,payers in pairs(game.Players:GetChildren()) do
